@@ -21,6 +21,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "utils",
     "user",
+    "otp",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
