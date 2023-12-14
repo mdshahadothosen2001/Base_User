@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from config.JWT_SETTINGS import JWT_SETTINGS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,6 +23,8 @@ LOCAL_APPS = [
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+
+JWT_SETTINGS = JWT_SETTINGS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
