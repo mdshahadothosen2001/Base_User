@@ -50,6 +50,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStamp):
         max_length=10, choices=Gender.choices, null=True, blank=True
     )
     date_of_birth = models.DateField(null=True, blank=True)
+
     class MaritalStatus(models.TextChoices):
         SINGLE = "SINGLE", "single"
         MARRIED = "MARRIED", "married"

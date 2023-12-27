@@ -1,6 +1,7 @@
 from django.db import models
 from utils.models import TimeStamp
 
+
 class OTPModel(TimeStamp):
     """save otp and then used to active user account"""
 

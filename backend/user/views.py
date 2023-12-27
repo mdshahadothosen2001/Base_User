@@ -31,7 +31,7 @@ def getRoutes(request):
         "/user/token/",
         "/user/token/refresh/",
         "/user/home/",
-        ]
+    ]
 
     return Response(routes)
 
@@ -56,7 +56,7 @@ class UserRegistrationView(APIView):
             )
 
         user_info = {
-            "phone_number":phone_number,
+            "phone_number": phone_number,
             "email": email,
             "first_name": first_name,
             "last_name": last_name,
@@ -67,7 +67,7 @@ class UserRegistrationView(APIView):
         if serializer.is_valid():
             serializer.save()
             otp_send(email)
-            
+
             return Response("succesfull! user is created")
 
 
@@ -112,7 +112,6 @@ class UserActivationView(APIView):
         return Response("Your account has been activated!")
 
 
-
 class UserPasswordResetView(APIView):
     """User can change thier password by token with new password"""
 
@@ -142,21 +141,20 @@ class UserPasswordResetView(APIView):
 
 class ForgottenPasswordResetView(APIView):
     """User can recreate password by their phone number and email when user forgotten their password"""
-    
+
     permission_classes = [AllowAny]
-
-
 
     def patch(self, request):
         """This method used to generate temporary password"""
 
         phone_number = request.data.get("phone_number")
         email = request.data.get("email")
-        
 
         if email and phone_number:
             recovery_password = recovery_key(email)
-            user = get_object_or_404(UserAccount, email=email, phone_number=phone_number)
+            user = get_object_or_404(
+                UserAccount, email=email, phone_number=phone_number
+            )
             user.set_password(recovery_password)
             user.save()
 
