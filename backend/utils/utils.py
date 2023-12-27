@@ -1,6 +1,6 @@
 from rest_framework.authentication import get_authorization_header
 from django.core.validators import RegexValidator
-from config.JWT_SETTINGS import JWT_SETTINGS
+from config.jwt_settings import JWT_SETTINGS
 from django.core.mail import send_mail
 from django.conf import settings
 import jwt
@@ -41,6 +41,7 @@ def recovery_key(email):
     message = f"Your recovery password is {recovery_password}. You can login by this key then you should change your password after login."
     from_email = settings.EMAIL_HOST_USER
     send_mail(subject, message, from_email, [from_email])
+    print(message)
 
     return recovery_password
 

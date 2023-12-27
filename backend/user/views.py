@@ -1,15 +1,39 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from django.utils import timezone
+
 from .serializers import UserRegistrationSerializer
+from utils.utils import tokenValidation
+from utils.utils import recovery_key
+from user.models import UserAccount
 from otp.otp_send import otp_send
 from otp.models import OTPModel
-from user.models import UserAccount
 
+
+@api_view(["GET"])
+def getRoutes(request):
+    "Used for show token api path"
+
+    routes = [
+        "/user/token/",
+        "user/token/refresh/",
+        "user/home/",
+        "/user/register/",
+        "/user/activate/",
+        "user/reset/",
+        "/user/forgotten/",
+        "/user/token/",
+        "/user/token/refresh/",
+        "/user/home/",
+        ]
+
+    return Response(routes)
 
 
 class UserRegistrationView(APIView):
@@ -20,8 +44,8 @@ class UserRegistrationView(APIView):
     def post(self, request, *args, **kwargs):
         """Used to create user account and send otp by calling otp function"""
 
-        phone_number = request.data.get("phone_number")
         email = request.data.get("email")
+        phone_number = request.data.get("phone_number")
         first_name = request.data.get("first_name")
         last_name = request.data.get("last_name")
         password = request.data.get("password")
@@ -75,7 +99,7 @@ class UserActivationView(APIView):
 
             return Response("Timeout!, OTP has expired.")
 
-        if now_time <= validation_time:
+        if now_time >= validation_time:
             otp_obj.delete()
 
             return Response("Timeout!, OTP has expired.")
@@ -86,3 +110,56 @@ class UserActivationView(APIView):
         otp_obj.delete()
 
         return Response("Your account has been activated!")
+
+
+
+class UserPasswordResetView(APIView):
+    """User can change thier password by token with new password"""
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        """This method used to recreate user password when user logined"""
+
+        new_password = request.data.get("new_password")
+
+        if not new_password:
+            raise ValidationError("new_password required")
+
+        payload = tokenValidation(request)
+        email = payload.get("email")
+
+        if email:
+            user = UserAccount.objects.get(email=email)
+            user.set_password(new_password)
+            user.save()
+
+            return Response({"message": "successfully changed password"})
+
+        else:
+            return Response("Email not found!")
+
+
+class ForgottenPasswordResetView(APIView):
+    """User can recreate password by their phone number and email when user forgotten their password"""
+    
+    permission_classes = [AllowAny]
+
+
+
+    def patch(self, request):
+        """This method used to generate temporary password"""
+
+        phone_number = request.data.get("phone_number")
+        email = request.data.get("email")
+        
+
+        if email and phone_number:
+            recovery_password = recovery_key(email)
+            user = get_object_or_404(UserAccount, email=email, phone_number=phone_number)
+            user.set_password(recovery_password)
+            user.save()
+
+            return Response("successfully done!")
+
+        raise ValidationError("Required phone_number and email")

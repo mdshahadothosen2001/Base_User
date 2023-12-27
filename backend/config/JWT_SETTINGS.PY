@@ -1,13 +1,14 @@
 from datetime import timedelta
 
+
 JWT_SETTINGS = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": "BaseUser",
+    "SIGNING_KEY": "Md._Shahadot_Hosen",
     "VERIFYING_KEY": None,
     "AUDIENCE": None,
     "ISSUER": None,
