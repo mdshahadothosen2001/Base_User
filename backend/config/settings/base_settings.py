@@ -5,7 +5,7 @@ import os
 
 
 from config.email_host_data import EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
-from config.jwt_settings import JWT_SETTINGS
+from config.JWT_SETTINGS import JWT_SETTINGS
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent

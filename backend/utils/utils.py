@@ -1,6 +1,6 @@
 from rest_framework.authentication import get_authorization_header
 from django.core.validators import RegexValidator
-from config.jwt_settings import JWT_SETTINGS
+from config.JWT_SETTINGS import JWT_SETTINGS
 from django.core.mail import send_mail
 from django.conf import settings
 import jwt

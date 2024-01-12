@@ -1,6 +1,6 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -17,20 +17,25 @@ from otp.models import OTPModel
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def getRoutes(request):
     "Used for show token api path"
 
     routes = [
-        "/user/token/",
-        "user/token/refresh/",
-        "user/home/",
+        "          Here All APIs:        ",
         "/user/register/",
         "/user/activate/",
-        "user/reset/",
-        "/user/forgotten/",
+    
         "/user/token/",
         "/user/token/refresh/",
+
         "/user/home/",
+        
+        "/user/reset/",
+        "/user/forgotten/",
+        "/user/profile-update/",
+
+        "/otp/resend/",
     ]
 
     return Response(routes)
@@ -50,11 +55,15 @@ class UserRegistrationView(APIView):
         last_name = request.data.get("last_name")
         password = request.data.get("password")
 
-        if phone_number is None or email is None:
+        if phone_number is None or email is None or password is None:
             raise ValidationError(
-                "you can not create user without fulfill phone number and email fields!"
+                "you can not create user without fulfill phone number and email and password fields! please double check."
             )
 
+        Is_member = UserAccount.objects.filter(email=email).values()
+        if len(Is_member) != 0:
+            raise ValidationError("You are already member")
+        
         user_info = {
             "phone_number": phone_number,
             "email": email,

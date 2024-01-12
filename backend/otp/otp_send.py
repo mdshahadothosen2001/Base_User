@@ -1,6 +1,8 @@
 import random
 from django.core.mail import send_mail
 from django.conf import settings
+
+from config.email_host_data import EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 from .models import OTPModel
 
 
@@ -13,9 +15,17 @@ def send_otp_to_email(email):
         subject = "Your OTP for registration"
         message = f"Your OTP is: {otp}"
         from_email = settings.EMAIL_HOST
-        if settings.EMAIL_HOST_USER:
+        if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
             send_mail(subject, message, from_email, [email])
-        print(f"{otp} OTP successfully sent to {email}")
+        print("\n\n\n............................................................................")
+        print(".")
+        print(".")
+        print(".")
+        print(f"Here your {otp} OTP successfully sent to {email}")
+        print(".")
+        print(".")
+        print(".")
+        print("............................................................................\n\n\n")
 
         return otp
 
