@@ -1,10 +1,29 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
-from user.views import getRoutes
+from django.urls import include, path
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("user/", include("user.urls")),
-    path("", getRoutes),
-    path("otp/", include("otp.urls")),
+    path(
+        route="admin/",
+        view=admin.site.urls,
+        name="admin",
+    ),
+    path(
+        route="user/",
+        view=include("user.urls"),
+        name="user",
+    ),
+    path(
+        route="otp/",
+        view=include("otp.urls"),
+        name="otp",
+    ),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("__debug__/", include("debug_toolbar.urls")),
+    ]
