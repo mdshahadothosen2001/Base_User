@@ -170,3 +170,27 @@ class ForgottenPasswordResetView(APIView):
             return Response("successfully done!")
 
         raise ValidationError("Required phone_number and email")
+
+
+class UpdateProfileView(APIView):
+    """User can update their profile information"""
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+
+        first_name = request.data.get("first_name")
+        last_name = request.data.get("last_name")
+
+        payload = tokenValidation(request)
+        email = payload.get("email")
+
+        if email:
+            user = UserAccount.objects.get(email=email)
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            user.save()
+
+            return Response({"message": "successfully update your profile"})

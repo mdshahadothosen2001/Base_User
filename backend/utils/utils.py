@@ -3,9 +3,13 @@ from django.core.validators import RegexValidator
 from config.JWT_SETTINGS import JWT_SETTINGS
 from django.core.mail import send_mail
 from django.conf import settings
+
 import jwt
 import random
 import string
+
+from config.email_host_data import EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
+
 
 
 PHONE_REGEX = RegexValidator(
@@ -40,9 +44,19 @@ def recovery_key(email):
     subject = "Your recovery password"
     message = f"Your recovery password is {recovery_password}. You can login by this key then you should change your password after login."
     from_email = settings.EMAIL_HOST_USER
-    send_mail(subject, message, from_email, [from_email])
-    print(message)
+    if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
+        send_mail(subject, message, from_email, [from_email])
 
+    print("\n\n\n............................................................................")
+    print(".")
+    print(".")
+    print(".")
+    print(message)
+    print(".")
+    print(".")
+    print(".")
+    print("............................................................................\n\n\n")
+    
     return recovery_password
 
 

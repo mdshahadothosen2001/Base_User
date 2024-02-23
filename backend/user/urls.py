@@ -4,6 +4,7 @@ from .views import (
     UserActivationView,
     UserPasswordResetView,
     ForgottenPasswordResetView,
+    UpdateProfileView,
     getRoutes,
 )
 
@@ -23,6 +24,12 @@ urlpatterns = [
         route="forgotten/",
         view=ForgottenPasswordResetView.as_view(),
         name="password_forgotten",
+    ),
+    # POST: 127.0.0.1:8000/user/update-profile/
+    path(
+        route="update-profile/",
+        view=UpdateProfileView.as_view(),
+        name="update-profile",
     ),
     path("", include("user.token_api.urls")),
 ]
