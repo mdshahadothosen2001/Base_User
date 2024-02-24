@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.db.models import Q
 
 from .serializers import UserRegistrationSerializer
 from utils.utils import tokenValidation
@@ -43,24 +44,27 @@ class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        """Used to create user account and send otp by calling otp function"""
-
-        email = request.data.get("email")
         phone_number = request.data.get("phone_number")
+        email = request.data.get("email")
         first_name = request.data.get("first_name")
         last_name = request.data.get("last_name")
         password = request.data.get("password")
 
-        if phone_number is None or email is None or password is None:
+        if not phone_number or not email or not password:
             raise ValidationError(
                 "you can not create user without fulfill phone number and email and password fields! please double check."
             )
 
-        Is_member = UserAccount.objects.filter(email=email).values()
-        if len(Is_member) != 0:
-            raise ValidationError("You are already member")
+        # check this phone_number exists or email using complex query with OR operation,
+        # if any exists return
+        is_member = UserAccount.objects.filter(
+            Q(phone_number=phone_number) | Q(email=email)
+        ).values()
+        if is_member:
+            if len(is_member) != 0:
+                return Response("You have already account at SeeHouse")
 
-        user_info = {
+        user_data = {
             "phone_number": phone_number,
             "email": email,
             "first_name": first_name,
@@ -68,12 +72,14 @@ class UserRegistrationView(APIView):
             "password": password,
         }
 
-        serializer = UserRegistrationSerializer(data=user_info)
+        serializer = UserRegistrationSerializer(data=user_data)
         if serializer.is_valid():
             serializer.save()
             otp_send(email)
 
-            return Response("succesfull! user is created")
+            return Response("Completed your registration process!")
+
+        return Response("Incompleted registration, Please provide valid data")
 
 
 class UserActivationView(APIView):
