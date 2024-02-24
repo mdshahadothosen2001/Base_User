@@ -25,16 +25,12 @@ def getRoutes(request):
         "          Here All APIs:        ",
         "/user/register/",
         "/user/activate/",
-    
         "/user/token/",
         "/user/token/refresh/",
-
         "/user/home/",
-        
         "/user/reset/",
         "/user/forgotten/",
         "/user/profile-update/",
-
         "/otp/resend/",
     ]
 
@@ -63,7 +59,7 @@ class UserRegistrationView(APIView):
         Is_member = UserAccount.objects.filter(email=email).values()
         if len(Is_member) != 0:
             raise ValidationError("You are already member")
-        
+
         user_info = {
             "phone_number": phone_number,
             "email": email,

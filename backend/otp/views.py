@@ -17,10 +17,8 @@ class ResentOTPView(APIView):
         email = request.data.get("email")
 
         if email is None:
-            raise ValidationError(
-                "Can not send OTP without email!, must include email"
-            )
-        
+            raise ValidationError("Can not send OTP without email!, must include email")
+
         previous_OTP = OTPModel.objects.filter(email=email)
         if len(previous_OTP) == 0:
             otp_send(email)

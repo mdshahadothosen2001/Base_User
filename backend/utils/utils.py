@@ -11,7 +11,6 @@ import string
 from config.email_host_data import EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 
 
-
 PHONE_REGEX = RegexValidator(
     regex=r"^01[13-9]\d{8}$",
     message="Phone number must be 11 digit & this format: '01*********'",
@@ -47,7 +46,9 @@ def recovery_key(email):
     if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
         send_mail(subject, message, from_email, [from_email])
 
-    print("\n\n\n............................................................................")
+    print(
+        "\n\n\n............................................................................"
+    )
     print(".")
     print(".")
     print(".")
@@ -55,8 +56,10 @@ def recovery_key(email):
     print(".")
     print(".")
     print(".")
-    print("............................................................................\n\n\n")
-    
+    print(
+        "............................................................................\n\n\n"
+    )
+
     return recovery_password
 
 

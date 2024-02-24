@@ -17,7 +17,7 @@ urlpatterns = [
     ),
     # POST: 127.0.0.1:8000/user/activate/
     path(route="activate/", view=UserActivationView.as_view(), name="user_activation"),
-    # POST: 127.0.0.1:8000/user//
+    # POST: 127.0.0.1:8000/user/reset/
     path(route="reset/", view=UserPasswordResetView.as_view(), name="password_reset"),
     # POST: 127.0.0.1:8000/user/forgotten/
     path(

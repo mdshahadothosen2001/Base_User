@@ -19,7 +19,7 @@ docker compose up --build
 ```
 
 > `Remember must full fill dev.env file and if want to send OTP to email must set email and email app password at email_host_data file otherwise print OTP at terminal.`
- 
+
 
  #
  #

@@ -17,7 +17,9 @@ def send_otp_to_email(email):
         from_email = settings.EMAIL_HOST
         if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
             send_mail(subject, message, from_email, [email])
-        print("\n\n\n............................................................................")
+        print(
+            "\n\n\n............................................................................"
+        )
         print(".")
         print(".")
         print(".")
@@ -25,7 +27,9 @@ def send_otp_to_email(email):
         print(".")
         print(".")
         print(".")
-        print("............................................................................\n\n\n")
+        print(
+            "............................................................................\n\n\n"
+        )
 
         return otp
 
