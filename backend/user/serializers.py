@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import UserAccount
 
 
@@ -16,3 +17,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserAccount
+        fields = ["email", "first_name", "last_name", "gender", "marital_status", "nationality"]
