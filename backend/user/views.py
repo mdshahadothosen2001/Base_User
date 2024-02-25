@@ -192,3 +192,4 @@ class UpdateProfileView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response("successfully updated your profile")
+        return Response("Please try with valid data")
