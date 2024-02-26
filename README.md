@@ -62,7 +62,7 @@ If you set email and email-app password in email_host_data then sent otp and rec
   "refresh":"...."
 }
 ```
-5. GET method `http://localhost:8000/user/home/` API for authentication with token:
+5. GET method `http://localhost:8000/user/token/login/` API for authentication with token:
 
 6. PATCH method `http://localhost:8000/user/reset/` API for change password when user is login with:
 ```bash
@@ -77,12 +77,13 @@ If you set email and email-app password in email_host_data then sent otp and rec
 ```bash
     "email":"....."
 ```
-9. PATCH method `http://localhost:8000/user/update-profile/` API for update user profile with changeable field or fields:
+9. PATCH method `http://localhost:8000/user/profile/update/` API for update user profile with changeable field or fields:
 ```bash
     "first_name":"..."
 ```
 or
 ```bash
     "first_name":"....",
-    "last_name":"....."
+    "last_name":".....",
+    "gender":"........"
 ```
