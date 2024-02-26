@@ -10,26 +10,28 @@ from .views import (
 
 
 urlpatterns = [
-    path("test/", getRoutes),
-    # POST: 127.0.0.1:8000/user/register/
+    # GET: localhost:8000/user/
+    path("", getRoutes),
+    # POST: localhost:8000/user/register/
     path(
         route="register/", view=UserRegistrationView.as_view(), name="user_registration"
     ),
-    # POST: 127.0.0.1:8000/user/activate/
+    # POST: localhost:8000/user/activate/
     path(route="activate/", view=UserActivationView.as_view(), name="user_activation"),
-    # POST: 127.0.0.1:8000/user/reset/
+    # POST: localhost:8000/user/reset/
     path(route="reset/", view=UserPasswordResetView.as_view(), name="password_reset"),
-    # POST: 127.0.0.1:8000/user/forgotten/
+    # POST: localhost:8000/user/forgotten/
     path(
         route="forgotten/",
         view=ForgottenPasswordResetView.as_view(),
         name="password_forgotten",
     ),
-    # POST: 127.0.0.1:8000/user/update-profile/
+    # PATCH: localhost:8000/user/profile/update/
     path(
-        route="update-profile/",
+        route="/profile/update/",
         view=UpdateProfileView.as_view(),
-        name="update-profile",
+        name="update_profile",
     ),
-    path("", include("user.token_api.urls")),
+    # localhost:8000/user/
+    path("token/", include("user.token_api.urls")),
 ]
