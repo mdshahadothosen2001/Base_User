@@ -28,7 +28,7 @@ urlpatterns = [
     ),
     # PATCH: localhost:8000/user/profile/update/
     path(
-        route="/profile/update/",
+        route="profile/update/",
         view=UpdateProfileView.as_view(),
         name="update_profile",
     ),

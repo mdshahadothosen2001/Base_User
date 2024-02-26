@@ -56,7 +56,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
         return Response(token_data)
 
 
-class home_view(APIView):
+class UserTokenLoginView(APIView):
     """User can loggin with access token"""
 
     permission_classes = [IsAuthenticated]
@@ -64,4 +64,4 @@ class home_view(APIView):
     def get(self, request, *args, **kwargs):
         """Used to return success message"""
 
-        return Response({"message": "Welcome to the home view!"})
+        return Response("Welcome to base user service!")
