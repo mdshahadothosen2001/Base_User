@@ -12,3 +12,8 @@ class OTPModel(TimeStamp):
         """used to return email when convert object data to string"""
 
         return self.email
+
+    class Meta:
+        verbose_name = "OTP"
+        verbose_name_plural = "OTPs"
+        db_table = "otp"
