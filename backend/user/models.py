@@ -60,6 +60,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStamp):
         max_length=10, choices=MaritalStatus.choices, null=True, blank=True
     )
     nationality = models.CharField(max_length=255, null=True, blank=True)
+    occupation = models.CharField(max_length=255, null=True, blank=True)
 
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -74,6 +75,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStamp):
         return self.phone_number
 
     class Meta:
-        verbose_name = "UserAccount"
-        verbose_name_plural = "UserAccounts"
+        verbose_name = "User Account"
+        verbose_name_plural = "User Accounts"
         db_table = "user_account"
