@@ -9,10 +9,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db.models import Q
 
-from .serializers import (
-    UserRegistrationSerializer, 
-    UpdateProfileSerializer
-    )
+from .serializers import UserRegistrationSerializer, UpdateProfileSerializer
 from utils.utils import tokenValidation
 from utils.utils import recovery_key
 from user.models import UserAccount
@@ -188,7 +185,9 @@ class UpdateProfileView(APIView):
 
         if email:
             instance = UserAccount.objects.get(email=email)
-            serializer = UpdateProfileSerializer(instance, data=request.data, partial=True)
+            serializer = UpdateProfileSerializer(
+                instance, data=request.data, partial=True
+            )
             if serializer.is_valid():
                 serializer.save()
                 return Response("successfully updated your profile")
