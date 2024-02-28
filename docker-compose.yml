@@ -37,11 +37,11 @@ services:
             sh -c "cd /app/backend &&
             python manage.py makemigrations --settings=config.settings.dev_settings &&
             python manage.py migrate --settings=config.settings.dev_settings &&
-            python manage.py runserver 0.0.0.0:8000 --settings=config.settings.dev_settings"
+            python manage.py runserver 0.0.0.0:8091 --settings=config.settings.dev_settings"
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - "8091:8091"
     depends_on:
       - db_base_user
     env_file:
