@@ -5,13 +5,10 @@ from .views import (
     UserPasswordResetView,
     ForgottenPasswordResetView,
     UpdateProfileView,
-    getRoutes,
 )
 
 
 urlpatterns = [
-    # GET: localhost:8000/user/
-    path("", getRoutes),
     # POST: localhost:8000/user/register/
     path(
         route="register/", view=UserRegistrationView.as_view(), name="user_registration"

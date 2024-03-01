@@ -1,6 +1,5 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -15,27 +14,6 @@ from utils.utils import recovery_key
 from user.models import UserAccount
 from otp.otp_send import otp_send
 from otp.models import OTPModel
-
-
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def getRoutes(request):
-    "Used for show token api path"
-
-    routes = [
-        "          Here All APIs:        ",
-        "/user/register/",
-        "/user/activate/",
-        "/user/token/",
-        "/user/token/refresh/",
-        "/user/home/",
-        "/user/reset/",
-        "/user/forgotten/",
-        "/user/profile-update/",
-        "/otp/resend/",
-    ]
-
-    return Response(routes)
 
 
 class UserRegistrationView(APIView):
