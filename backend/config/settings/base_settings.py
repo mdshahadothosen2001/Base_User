@@ -35,6 +35,7 @@ LOCAL_APPS = [
     "utils",
     "user",
     "otp",
+    "user_api",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -144,5 +145,4 @@ EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://bf54-103-125-29-41.ngrok-free.app",
 ]
