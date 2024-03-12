@@ -1,6 +1,5 @@
 from django.urls import path, include
 from .views import (
-    UserRegistrationView,
     UserActivationView,
     UserPasswordResetView,
     ForgottenPasswordResetView,
@@ -9,10 +8,6 @@ from .views import (
 
 
 urlpatterns = [
-    # POST: localhost:8000/user/register/
-    path(
-        route="register/", view=UserRegistrationView.as_view(), name="user_registration"
-    ),
     # POST: localhost:8000/user/activate/
     path(route="activate/", view=UserActivationView.as_view(), name="user_activation"),
     # POST: localhost:8000/user/password/reset/

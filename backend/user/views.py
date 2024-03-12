@@ -6,54 +6,12 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from django.utils import timezone
-from django.db.models import Q
 
-from .serializers import UserRegistrationSerializer, UpdateProfileSerializer
+from .serializers import UpdateProfileSerializer
 from utils.utils import tokenValidation
 from utils.utils import recovery_key
 from user.models import UserAccount
-from otp.otp_send import otp_send
 from otp.models import OTPModel
-
-
-class UserRegistrationView(APIView):
-    """Users can register their account by email, frist_name, last_name and password."""
-
-    permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        phone_number = request.data.get("phone_number")
-        email = request.data.get("email")
-        password = request.data.get("password")
-
-        if not phone_number or not email or not password:
-            raise ValidationError(
-                "you can not create user without fulfill phone number and email and password fields! please double check."
-            )
-
-        # check this phone_number exists or email using complex query with OR operation,
-        # if any exists return
-        is_member = UserAccount.objects.filter(
-            Q(phone_number=phone_number) | Q(email=email)
-        ).values()
-        if is_member:
-            if len(is_member) != 0:
-                return Response("You have already account at SeeHouse")
-
-        user_data = {
-            "phone_number": phone_number,
-            "email": email,
-            "password": password,
-        }
-
-        serializer = UserRegistrationSerializer(data=user_data)
-        if serializer.is_valid():
-            serializer.save()
-            otp_send(email)
-
-            return Response("Completed your registration process!")
-
-        return Response("Incompleted registration, Please provide valid data")
 
 
 class UserActivationView(APIView):
