@@ -19,6 +19,11 @@ urlpatterns = [
         view=include("otp.urls"),
         name="otp",
     ),
+    path(
+        route="user/",
+        view=include("user_api.urls"),
+        name="user",
+    ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
