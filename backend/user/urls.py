@@ -1,18 +1,11 @@
 from django.urls import path, include
 from .views import (
-    UserPasswordResetView,
     ForgottenPasswordResetView,
     UpdateProfileView,
 )
 
 
 urlpatterns = [
-    # POST: localhost:8000/user/password/reset/
-    path(
-        route="password/reset/",
-        view=UserPasswordResetView.as_view(),
-        name="password_reset",
-    ),
     # POST: localhost:8000/user/password/forgotten/
     path(
         route="password/forgotten/",

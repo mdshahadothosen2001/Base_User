@@ -11,33 +11,6 @@ from utils.utils import recovery_key
 from user.models import UserAccount
 
 
-class UserPasswordResetView(APIView):
-    """User can change thier password by token with new password"""
-
-    permission_classes = [IsAuthenticated]
-
-    def patch(self, request, *args, **kwargs):
-        """This method used to recreate user password when user logined"""
-
-        new_password = request.data.get("new_password")
-
-        if not new_password:
-            raise ValidationError("new_password required")
-
-        payload = tokenValidation(request)
-        email = payload.get("email")
-
-        if email:
-            user = UserAccount.objects.get(email=email)
-            user.set_password(new_password)
-            user.save()
-
-            return Response({"message": "successfully changed password"})
-
-        else:
-            return Response("Email not found!")
-
-
 class ForgottenPasswordResetView(APIView):
     """User can recreate password by their phone number and email when user forgotten their password"""
 
