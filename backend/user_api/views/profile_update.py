@@ -2,17 +2,17 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import UpdateProfileSerializer
+from ..serializers.profile_update import UpdateProfileSerializer
 from utils.utils import tokenValidation
 from user.models import UserAccount
 
 
-class UpdateProfileView(APIView):
+class UserProfileUpdateView(APIView):
     """User can update their profile information"""
 
     permission_classes = [IsAuthenticated]
 
-    def patch(self, request, *args, **kwargs):
+    def patch(self, request):
         payload = tokenValidation(request)
         email = payload.get("email")
 
@@ -24,4 +24,4 @@ class UpdateProfileView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response("successfully updated your profile")
-        return Response("Please try with valid data")
+        return Response("Incomplete updation! Please try with valid data")

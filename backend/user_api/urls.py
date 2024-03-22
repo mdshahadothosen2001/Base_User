@@ -4,6 +4,7 @@ from .views.register import UserRegistrationView
 from .views.activate import UserActivationView
 from .views.password_change import UserPasswordChangeView
 from .views.password_recover import UserPasswordRecoverView
+from .views.profile_update import UserProfileUpdateView
 
 
 urlpatterns = [
@@ -24,5 +25,11 @@ urlpatterns = [
         route="password/recover/",
         view=UserPasswordRecoverView.as_view(),
         name="password_recover",
+    ),
+    # PATCH: localhost:8091/user/profile/update/
+    path(
+        route="profile/update/",
+        view=UserProfileUpdateView.as_view(),
+        name="update_profile",
     ),
 ]

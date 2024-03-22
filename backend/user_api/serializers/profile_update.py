@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserAccount
+from user.models import UserAccount
 
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
@@ -13,4 +13,5 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             "gender",
             "marital_status",
             "nationality",
+            "occupation",
         ]
