@@ -10,11 +10,6 @@ urlpatterns = [
         name="admin",
     ),
     path(
-        route="user/",
-        view=include("user.urls"),
-        name="user",
-    ),
-    path(
         route="otp/",
         view=include("otp.urls"),
         name="otp",
