@@ -3,6 +3,7 @@ from django.urls import path
 from .views.register import UserRegistrationView
 from .views.activate import UserActivationView
 from .views.password_change import UserPasswordChangeView
+from .views.password_recover import UserPasswordRecoverView
 
 
 urlpatterns = [
@@ -17,5 +18,11 @@ urlpatterns = [
         route="password/change/",
         view=UserPasswordChangeView.as_view(),
         name="password_change",
+    ),
+    # POST: localhost:8091/user/password/recover/
+    path(
+        route="password/recover/",
+        view=UserPasswordRecoverView.as_view(),
+        name="password_recover",
     ),
 ]
