@@ -5,6 +5,7 @@ from .views.activate import UserActivationView
 from .views.password_change import UserPasswordChangeView
 from .views.password_recover import UserPasswordRecoverView
 from .views.profile_update import UserProfileUpdateView
+from .views.token import CustomTokenObtainPairView
 
 
 urlpatterns = [
@@ -32,4 +33,6 @@ urlpatterns = [
         view=UserProfileUpdateView.as_view(),
         name="update_profile",
     ),
+    # POST: localhost:8091/user/token/
+    path(route="token/", view=CustomTokenObtainPairView.as_view(), name="token"),
 ]
