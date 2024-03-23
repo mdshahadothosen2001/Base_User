@@ -1,9 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework.exceptions import ValidationError
 
-from otp.models import OTPModel
+from user.models import UserAccount
 from otp.otp_send import otp_send
 
 
@@ -12,18 +11,19 @@ class ResentOTPView(APIView):
 
     permission_classes = [AllowAny]
 
+    def validate_parameter(self, email):
+        if email:
+            return True
+        else:
+            return False
+
     def post(self, request, *args, **kwargs):
 
         email = request.data.get("email")
 
-        if email is None:
-            raise ValidationError("Can not send OTP without email!, must include email")
-
-        previous_OTP = OTPModel.objects.filter(email=email)
-        if len(previous_OTP) == 0:
-            otp_send(email)
-            return Response("You check OTP at your terminal or email inbox")
-        else:
-            previous_OTP.delete()
-            otp_send(email)
-            return Response("You check OTP at your terminal or email inbox")
+        if self.validate_parameter(email) is True:
+            is_member = UserAccount.objects.filter(email=email).exists()
+            if is_member is True:
+                otp_send(email)
+                return Response("OTP send to your inbox")
+        return Response("Please try with valid email")
