@@ -42,9 +42,9 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStamp):
     last_name = models.CharField(max_length=255, null=True, blank=True)
 
     class Gender(models.TextChoices):
-        MALE = "MALE", "male"
-        FEMALE = "FEMALE", "female"
-        OTHERS = "OTHERS", "others"
+        male = "male"
+        female = "female"
+        others = "others"
 
     gender = models.CharField(
         max_length=10, choices=Gender.choices, null=True, blank=True
@@ -52,9 +52,9 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStamp):
     date_of_birth = models.DateField(null=True, blank=True)
 
     class MaritalStatus(models.TextChoices):
-        SINGLE = "SINGLE", "single"
-        MARRIED = "MARRIED", "married"
-        OTHERS = "OTHERS", "others"
+        unmarried = "unmarried"
+        married = "married"
+        others = "others"
 
     marital_status = models.CharField(
         max_length=10, choices=MaritalStatus.choices, null=True, blank=True

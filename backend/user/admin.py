@@ -26,6 +26,9 @@ class UserAccountAdmin(admin.ModelAdmin):
         "phone_number",
         "email",
     )
+    list_filter = [
+        "is_active",
+    ]
     list_per_page = 25
 
 
