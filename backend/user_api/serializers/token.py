@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from datetime import datetime
+from django.utils import timezone
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -8,21 +8,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
     @classmethod
     def get_token(cls, user):
-        """Used to get token and set user data"""
+        """Used to add additional data to the token response"""
 
         token = super().get_token(user)
         token["email"] = user.email
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
-        token["current_date"] = datetime.now().strftime("%Y:%m:%d")
-        current_time = datetime.now().strftime("%I:%M:%p")
-        token["current_time"] = current_time
-
-        if "AM" in current_time:
-            token["day_status"] = "Day"
-        else:
-            token["day_status"] = "Night"
-
-        token["location"] = "Dhaka"
+        token["current_datetime"] = timezone.now().isoformat()
+        token["is_active"] = user.is_active
 
         return token
