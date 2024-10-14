@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from user.models import UserAccount
-from otp.otp_send import otp_send
+from otp.otp_send import generate_otp_and_otp_send_to_email
 
 
-class ResentOTPView(APIView):
+class ResendOTPView(APIView):
     """User can resend OTP after timeout of previous OTP"""
 
     permission_classes = [AllowAny]
@@ -24,6 +24,6 @@ class ResentOTPView(APIView):
         if self.validate_parameter(email) is True:
             is_member = UserAccount.objects.filter(email=email).exists()
             if is_member is True:
-                otp_send(email)
+                generate_otp_and_otp_send_to_email(email)
                 return Response("OTP send to your inbox")
         return Response("Please try with valid email")

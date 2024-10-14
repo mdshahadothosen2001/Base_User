@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import ResentOTPView
+from .views import ResendOTPView
 
 
 urlpatterns = [
     # POST: 127.0.0.1:8091/otp/resend/
-    path(route="resend/", view=ResentOTPView.as_view(), name="otp_resend"),
+    path(route="resend/", view=ResendOTPView.as_view(), name="otp_resend"),
 ]
