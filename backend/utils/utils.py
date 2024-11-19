@@ -1,4 +1,5 @@
 from rest_framework.authentication import get_authorization_header
+from django.core.cache import cache
 from django.core.validators import RegexValidator
 from config.JWT_SETTINGS import JWT_SETTINGS
 from django.core.mail import send_mail
@@ -46,19 +47,7 @@ def recovery_key(email):
     if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
         send_mail(subject, message, from_email, [from_email])
 
-    print(
-        "\n\n\n............................................................................"
-    )
-    print(".")
-    print(".")
-    print(".")
     print(message)
-    print(".")
-    print(".")
-    print(".")
-    print(
-        "............................................................................\n\n\n"
-    )
 
     return recovery_password
 
@@ -70,3 +59,17 @@ def generate_random_string(length):
     random_string = "".join(random.choice(characters) for i in range(length))
 
     return random_string
+
+
+def data_set_to_cache(key, value, timeout):
+    if key and value and timeout:
+        cache.set(key, value, timeout)
+        return True
+    
+    return False
+
+
+def data_get_from_cache(key):
+    if key:
+        value = cache.get(key)
+        return value
