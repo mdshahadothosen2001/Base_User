@@ -22,7 +22,9 @@ class ResendOTPView(APIView):
         email = request.data.get("email")
 
         if self.validate_parameter(email) is True:
-            is_member = UserAccount.objects.filter(email=email).exists()
+            is_member = UserAccount.objects.filter(
+                email=email, is_active=False
+            ).exists()
             if is_member is True:
                 generate_otp_and_otp_send_to_email(email)
                 return Response("OTP send to your inbox")
