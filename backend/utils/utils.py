@@ -65,7 +65,7 @@ def data_set_to_cache(key, value, timeout):
     if key and value and timeout:
         cache.set(key, value, timeout)
         return True
-    
+
     return False
 
 
@@ -73,3 +73,17 @@ def data_get_from_cache(key):
     if key:
         value = cache.get(key)
         return value
+
+
+def generate_otp_and_otp_send_to_email(email):
+    """Used to generate otp and email sending included subject and meesage with otp"""
+
+    otp = random.randint(1000, 9999)
+    subject = "Your OTP for account activation"
+    message = f"Your OTP is: {otp}"
+    from_email = settings.EMAIL_HOST
+    if settings.EMAIL_HOST_USER and settings.EMAIL_HOST_PASSWORD:
+        send_mail(subject, message, from_email, [email])
+
+    data_set_to_cache(email, otp, 300)
+    return otp

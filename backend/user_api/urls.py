@@ -1,13 +1,14 @@
-from rest_framework_simplejwt.views import TokenRefreshView
-
 from django.urls import path
 
-from .views.register import UserRegistrationView
-from .views.activate import UserActivationView
-from .views.password_change import UserPasswordChangeView
-from .views.password_recover import UserPasswordRecoverView
-from .views.profile_update import UserProfileUpdateView
-from .views.token import CustomTokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
+
+from user_api.views.register import UserRegistrationView
+from user_api.views.activate import UserActivationView
+from user_api.views.password_change import UserPasswordChangeView
+from user_api.views.password_recover import UserPasswordRecoverView
+from user_api.views.profile_update import UserProfileUpdateView
+from user_api.views.token import CustomTokenObtainPairView
+from user_api.views.otp import ResendOTPView
 
 
 urlpatterns = [
@@ -15,6 +16,8 @@ urlpatterns = [
     path(
         route="register/", view=UserRegistrationView.as_view(), name="user_registration"
     ),
+    # POST: localhost:8091/user/account/otp/resend/
+    path(route="account/otp/resend/", view=ResendOTPView.as_view(), name="otp_resend"),
     # POST: localhost:8091/user/activate/
     path(route="activate/", view=UserActivationView.as_view(), name="user_activation"),
     # POST: localhost:8091/user/password/change/

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from user.models import UserAccount
-from otp.otp_send import generate_otp_and_otp_send_to_email
+from utils.utils import generate_otp_and_otp_send_to_email
 
 
 class ResendOTPView(APIView):
@@ -26,6 +26,6 @@ class ResendOTPView(APIView):
                 email=email, is_active=False
             ).exists()
             if is_member is True:
-                generate_otp_and_otp_send_to_email(email)
-                return Response("OTP send to your inbox")
+                otp = generate_otp_and_otp_send_to_email(email)
+                return Response(f"OTP send to your inbox {otp}")
         return Response("Please try with valid email")

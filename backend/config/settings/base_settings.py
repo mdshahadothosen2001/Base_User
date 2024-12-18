@@ -34,7 +34,6 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "utils",
     "user",
-    "otp",
     "user_api",
 ]
 

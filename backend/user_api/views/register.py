@@ -4,9 +4,9 @@ from rest_framework.views import APIView
 
 from django.db.models import Q
 
-from ..serializers.register import UserRegistrationSerializer
+from user_api.serializers.register import UserRegistrationSerializer
 from user.models import UserAccount
-from otp.otp_send import generate_otp_and_otp_send_to_email
+from utils.utils import generate_otp_and_otp_send_to_email
 
 
 class UserRegistrationView(APIView):
