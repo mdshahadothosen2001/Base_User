@@ -7,20 +7,14 @@ from user.models import UserAccount
 
 
 class UserPasswordChangeView(APIView):
-    """User can change thier password by token with new password when they are login"""
+    """This class allow to User can change thier password by Access Token with new password"""
 
     permission_classes = [IsAuthenticated]
-
-    def validate_parameter(self, new_password):
-        if new_password:
-            return True
-        else:
-            return False
 
     def patch(self, request, *args, **kwargs):
         new_password = request.data.get("new_password")
 
-        if self.validate_parameter(new_password) is True:
+        if new_password:
             payload = tokenValidation(request)
             email = payload.get("email")
             if email:
@@ -28,6 +22,16 @@ class UserPasswordChangeView(APIView):
                 user.set_password(new_password)
                 user.save()
 
-                return Response({"message": "successfully changed password"})
+                return Response(
+                    {
+                        "success": True,
+                        "message": "Completed process! password has been changed",
+                    }
+                )
 
-        return Response("Incompleted process! please try with new password")
+        return Response(
+            {
+                "success": False,
+                "message": "Incompleted process! please try with new password",
+            }
+        )
