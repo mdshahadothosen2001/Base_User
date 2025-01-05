@@ -69,12 +69,6 @@ def data_set_to_cache(key, value, timeout):
     return False
 
 
-def data_get_from_cache(key):
-    if key:
-        value = cache.get(key)
-        return value
-
-
 def generate_otp_and_otp_send_to_email(email):
     """Used to generate otp and email sending included subject and meesage with otp"""
 
